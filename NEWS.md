@@ -1,3 +1,8 @@
+# rnaturalearth 0.3.3
+
+- Using `lifecycle` to indicate that support of `sp` object will be eventually droped. Users should now use `ne_download(returnclass = "sf")`, instead of `ne_download(returnclass = "sp")`.
+- `terra` is now included in the Imports section.
+
 # rnaturalearth 0.3.2
 
 * Added new maintainer and contributors ([#62](https://github.com/ropensci/rnaturalearth/issues/62)).

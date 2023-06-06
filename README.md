@@ -10,6 +10,7 @@ status](https://www.r-pkg.org/badges/version/rnaturalearth)](https://CRAN.R-proj
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![R-CMD-check](https://github.com/ropensci/rnaturalearth/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ropensci/rnaturalearth/actions/workflows/R-CMD-check.yaml)
+
 <!-- badges: end -->
 
 # rnaturalearth
@@ -43,7 +44,7 @@ structures vector data by scale, category and type. These determine the
 filenames of downloads. rnaturalearth uses this structure to facilitate
 download (like an API).
 
-s## Install rnaturalearth
+## Install rnaturalearth
 
 Install from CRAN :
 
@@ -71,32 +72,43 @@ devtools::install_github("ropensci/rnaturalearthhires")
 
 Here using `sp::plot` as a simple, quick way to plot maps. Maps could
 also be made with `ggplot2`, `tmap` or other options. All retrieval
-functions accept an argument `returnclass='sf'` to return package `sf`
+functions accept an argument `returnclass = "sf"` to return package `sf`
 (Simple Features) objects.
 
 ``` r
 library(rnaturalearth)
+The legacy packages maptools, rgdal, and rgeos, underpinning this package
+will retire shortly. Please refer to R-spatial evolution reports on
+https://r-spatial.org/r/2023/05/15/evolution4.html for details.
+This package is now running under evolution status 0 
+Support for Spatial objects (`sp`) will be deprecated in {rnaturalearth} and will be removed in a future release of the package. Please use `sf` objects with {rnaturalearth}. For example: `ne_download(returnclass = 'sf')`
 library(sp)
 
 # world countries
 sp::plot(ne_countries())
+Warning: The `returnclass` argument of `ne_download()` sp as of rnaturalearth 1.0.0.
+ℹ Please use `sf` objects with {rnaturalearth}, support for Spatial objects
+  (sp) will be removed in a future release of the package.
+This warning is displayed once every 8 hours.
+Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+generated.
 ```
 
-![](tools/README-unnamed-chunk-2-1.svg)<!-- -->
+![](man/figures/README-unnamed-chunk-2-1.png)<!-- -->
 
 ``` r
 # uk
 sp::plot(ne_countries(country = "united kingdom"))
 ```
 
-![](tools/README-unnamed-chunk-2-2.svg)<!-- -->
+![](man/figures/README-unnamed-chunk-2-2.png)<!-- -->
 
 ``` r
 # states, admin level1 boundaries
 sp::plot(ne_states(country = "spain"))
 ```
 
-![](tools/README-unnamed-chunk-2-3.svg)<!-- -->
+![](man/figures/README-unnamed-chunk-2-3.png)<!-- -->
 
 ## Introductory vignette
 
@@ -182,13 +194,14 @@ resource.
 ### Potential additional functions
 
 -   facilitate joining of user data to country boundaries
+
     -   similar to
         <https://github.com/AndySouth/rworldmap/blob/master/R/joinCountryData2Map.R>
     -   … but with a better name
     -   similar allowing of join by ISO codes or names, with attempted
         synonym matching
     -   similar reporting of country joining success and failure
--   facilitate subsetting by country groupings
-    -   e.g. least developed countries etc.
 
-[![ropensci_footer](https://ropensci.org/public_images/github_footer.png)](https://ropensci.org)
+-   facilitate subsetting by country groupings
+
+    -   e.g. least developed countries etc.

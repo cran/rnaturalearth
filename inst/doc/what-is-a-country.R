@@ -1,8 +1,7 @@
 ## ---- include = FALSE---------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>",
-  dev = "svglite"
+  comment = "#>"
 )
 
 ## ---- eval=TRUE, echo=TRUE, message=FALSE-------------------------------------
@@ -10,7 +9,6 @@ library(rnaturalearth)
 library(sp)
 
 ## ---- eval=TRUE, echo=TRUE, message=FALSE-------------------------------------
-
 # countries, UK undivided
 sp::plot(ne_countries(country = "united kingdom", type = "countries"))
 # map_units, UK divided into England, Scotland, Wales and Northern Ireland
@@ -32,7 +30,6 @@ sp::plot(ne_countries(country = "france", type = "sovereignty"), col = "red")
 sp::plot(ne_coastline(scale = 110), col = "lightgrey", lty = 3, add = TRUE)
 
 ## ---- eval=FALSE, echo=TRUE, message=FALSE------------------------------------
-#  
 #  # countries, large scale
 #  sp::plot(ne_countries(country = "united kingdom", scale = "large"))
 #  
@@ -43,7 +40,6 @@ sp::plot(ne_coastline(scale = 110), col = "lightgrey", lty = 3, add = TRUE)
 #  sp::plot(ne_countries(country = "united kingdom", scale = "small"))
 
 ## ---- eval=FALSE, echo=TRUE, message=FALSE------------------------------------
-#  
 #  # states country='united kingdom'
 #  sp::plot(ne_states(country = "united kingdom"))
 #  # states geounit='england'

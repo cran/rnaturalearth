@@ -27,8 +27,8 @@
 #'
 #' @examples \dontrun{
 #' # download followed by load from tempdir() works in same R session
-#' spdf_world <- ne_download(scale = 110, type = "countries") spdf_world2 <-
-#' ne_load(scale = 110, type = "countries")
+#' spdf_world <- ne_download(scale = 110, type = "countries")
+#' spdf_world2 <- ne_load(scale = 110, type = "countries")
 #'
 #' # download followed by load from specified directory works between R sessions
 #' spdf_world <- ne_download(scale = 110, type = "countries", destdir = getwd())
@@ -38,11 +38,11 @@
 #' rst <- ne_download(scale = 50, type = "OB_50M", category = "raster", destdir = getwd())
 #'
 #' # load after having downloaded
-#' rst <- ne_load(scale = 50, type = "OB_50M", category = "raster", destdir =
-#' getwd())
+#' rst <- ne_load(scale = 50, type = "OB_50M", category = "raster", destdir = getwd())
 #'
 #' # plot
-#' library(terra) plot(rst)
+#' library(terra)
+#' plot(rst)
 #' # end dontrun
 #' }
 #'
@@ -57,7 +57,12 @@ ne_load <- function(scale = 110,
                     file_name = NULL,
                     returnclass = c("sp", "sf")) {
   category <- match.arg(category)
+
   returnclass <- match.arg(returnclass)
+
+  if (returnclass == "sp") {
+    deprecate_sp("ne_download(returnclass = 'sp')")
+  }
 
   if (is.null(file_name)) {
     file_name <- ne_file_name(scale = scale, type = type, category = category)
@@ -66,8 +71,8 @@ ne_load <- function(scale = 110,
 
   error_msg <- paste0(
     "the file ",
-     file_name, " seems not to exist in your local folder ",
-     destdir,
+    file_name, " seems not to exist in your local folder ",
+    destdir,
     "\nDid you download it using ne_download()?"
   )
 

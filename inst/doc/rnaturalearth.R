@@ -1,8 +1,7 @@
 ## ---- include = FALSE---------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>",
-  dev = "svglite"
+  comment = "#>"
 )
 
 ## ---- eval=TRUE, echo=TRUE, message=FALSE-------------------------------------
@@ -10,7 +9,6 @@ library(rnaturalearth)
 library(sp)
 
 ## ---- eval=TRUE, echo=TRUE, message=FALSE-------------------------------------
-
 # world at small scale (low resolution)
 sp::plot(ne_countries(type = "countries", scale = "small"))
 
@@ -40,13 +38,11 @@ sp::plot(ne_countries(country = "united kingdom", scale = "medium"))
 #  sp::plot(ne_states(country = "france"))
 
 ## ---- eval=TRUE, echo=TRUE, message=FALSE-------------------------------------
-
 # coastline of the world
 # subsetting of coastline is not possible because the Natural Earth data are not attributed in that way
 sp::plot(ne_coastline())
 
 ## ---- eval=FALSE, echo=TRUE, message=FALSE------------------------------------
-#  
 #  # lakes
 #  lakes110 <- ne_download(scale = 110, type = "lakes", category = "physical")
 #  sp::plot(lakes110, col = "blue")
