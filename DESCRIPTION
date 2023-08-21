@@ -1,6 +1,6 @@
 Package: rnaturalearth
 Title: World Map Data from Natural Earth
-Version: 0.3.3
+Version: 0.3.4
 Authors@R: c(
   person(
     family = "Massicotte",
@@ -27,7 +27,7 @@ License: MIT + file LICENSE
 LazyData: true
 LazyDataCompression: xz
 Encoding: UTF-8
-URL: https://docs.ropensci.org/rnaturalearth/
+URL: https://docs.ropensci.org/rnaturalearth/,
         https://github.com/ropensci/rnaturalearth
 BugReports: https://github.com/ropensci/rnaturalearth/issues
 Additional_repositories: http://packages.ropensci.org
@@ -42,11 +42,11 @@ Config/Needs/website: ropensci/rnaturalearthhires
 VignetteBuilder: knitr
 RoxygenNote: 7.2.3
 NeedsCompilation: no
-Packaged: 2023-06-06 12:40:38 UTC; filoche
+Packaged: 2023-08-20 13:13:04 UTC; filoche
 Author: Philippe Massicotte [aut, cre]
     (<https://orcid.org/0000-0002-5919-4116>),
   Andy South [aut],
   Koen Hufkens [ctb] (<https://orcid.org/0000-0002-5070-8109>)
 Maintainer: Philippe Massicotte <pmassicotte@hotmail.com>
 Repository: CRAN
-Date/Publication: 2023-06-06 13:20:02 UTC
+Date/Publication: 2023-08-21 09:10:02 UTC
