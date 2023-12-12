@@ -1,6 +1,8 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
 <!-- used devtools::build_readme() to update the md -->
+
 <!-- badges: start -->
 
 [![CRAN
@@ -20,24 +22,24 @@ Earth](https://www.naturalearthdata.com/) map data.
 
 This package provides :
 
--   access to a pre-downloaded subset of Natural Earth v4.1.0
-    (March 2018) vector data commonly used in world mapping
+  - access to a pre-downloaded subset of Natural Earth v4.1.0 (March
+    2018) vector data commonly used in world mapping
 
--   easy subsetting by countries and regions
+  - easy subsetting by countries and regions
 
--   functions to download other Natural Earth vector and raster data
+  - functions to download other Natural Earth vector and raster data
 
--   a simple, reproducible and sustainable workflow from Natural Earth
+  - a simple, reproducible and sustainable workflow from Natural Earth
     data to rnaturalearth enabling updating as new versions become
     available
 
--   clarification of differences in world maps classified by countries,
+  - clarification of differences in world maps classified by countries,
     sovereign states and map units
 
--   consistency with Natural Earth naming conventions so that
+  - consistency with Natural Earth naming conventions so that
     rnaturalearth users can use Natural Earth documentation
 
--   data in ‘sf’ or ‘sp’ formats
+  - data in `sf` or `sv` formats
 
 The [Natural Earth](https://www.naturalearthdata.com/) website
 structures vector data by scale, category and type. These determine the
@@ -70,46 +72,38 @@ devtools::install_github("ropensci/rnaturalearthhires")
 
 ## First usage
 
-Here using `sp::plot` as a simple, quick way to plot maps. Maps could
-also be made with `ggplot2`, `tmap` or other options. All retrieval
-functions accept an argument `returnclass = "sf"` to return package `sf`
-(Simple Features) objects.
+Here using `plot` as a simple, quick way to plot maps. Maps could also
+be made with `ggplot2`, `tmap` or other options. All retrieval functions
+accept an argument `returnclass = "sf"` to return package `sf` (Simple
+Features) or `returnclass = "sv"` (SpatVector) objects.
 
 ``` r
 library(rnaturalearth)
-The legacy packages maptools, rgdal, and rgeos, underpinning the sp package,
-which was just loaded, will retire in October 2023.
-Please refer to R-spatial evolution reports for details, especially
-https://r-spatial.org/r/2023/05/15/evolution4.html.
-It may be desirable to make the sf package available;
-package maintainers should consider adding sf to Suggests:.
-The sp package is now running under evolution status 2
-     (status 2 uses the sf package in place of rgdal)
-Support for Spatial objects (`sp`) will be deprecated in {rnaturalearth} and will be removed in a future release of the package. Please use `sf` objects with {rnaturalearth}. For example: `ne_download(returnclass = 'sf')`
-library(sp)
 
 # world countries
-sp::plot(ne_countries())
-Warning: The `returnclass` argument of `ne_download()` sp as of rnaturalearth 1.0.0.
-ℹ Please use `sf` objects with {rnaturalearth}, support for Spatial objects
-  (sp) will be removed in a future release of the package.
-This warning is displayed once every 8 hours.
-Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-generated.
+plot(ne_countries())
+Warning: plotting the first 9 out of 168 attributes; use max.plot = 168 to plot
+all
 ```
 
 ![](man/figures/README-unnamed-chunk-2-1.png)<!-- -->
 
 ``` r
+
 # uk
-sp::plot(ne_countries(country = "united kingdom"))
+plot(ne_countries(country = "united kingdom"))
+Warning: plotting the first 10 out of 168 attributes; use max.plot = 168 to
+plot all
 ```
 
 ![](man/figures/README-unnamed-chunk-2-2.png)<!-- -->
 
 ``` r
+
 # states, admin level1 boundaries
-sp::plot(ne_states(country = "spain"))
+plot(ne_states(country = "spain"))
+Warning: plotting the first 9 out of 121 attributes; use max.plot = 121 to plot
+all
 ```
 
 ![](man/figures/README-unnamed-chunk-2-3.png)<!-- -->
@@ -129,10 +123,12 @@ functions to help with download of these data.
 The data available are outlined in the two tables below and online
 [here](https://www.naturalearthdata.com/downloads/50m-physical-vectors/).
 
+``` 
 
-    category   cultural 
+category   cultural 
 
-    category   physical 
+category   physical 
+```
 
 Specify the `scale`, `category` and `type` of the vector you want as in
 the examples below.
@@ -140,7 +136,7 @@ the examples below.
 ``` r
 # lakes
 lakes110 <- ne_download(scale = 110, type = "lakes", category = "physical")
-sp::plot(lakes110)
+plot(lakes110)
 
 # rivers
 rivers50 <- ne_download(
@@ -185,27 +181,27 @@ resource.
 
 ### Potential additional data
 
--   Country synonyms lookup
-    -   dataframe with ISO3 and country synonyms
-    -   similar to
+  - Country synonyms lookup
+      - dataframe with ISO3 and country synonyms
+      - similar to
         <https://github.com/AndySouth/rworldmap/blob/master/data/countrySynonyms.rda>
--   Country larger regions lookup
-    -   dataframe with ISO3 and membership of different regional
+  - Country larger regions lookup
+      - dataframe with ISO3 and membership of different regional
         groupings, e.g. continent, least developed countries etc.
-    -   similar to
+      - similar to
         <https://github.com/AndySouth/rworldmap/blob/master/data/countryRegions.rda>
 
 ### Potential additional functions
 
--   facilitate joining of user data to country boundaries
-
-    -   similar to
+  - facilitate joining of user data to country boundaries
+    
+      - similar to
         <https://github.com/AndySouth/rworldmap/blob/master/R/joinCountryData2Map.R>
-    -   … but with a better name
-    -   similar allowing of join by ISO codes or names, with attempted
+      - … but with a better name
+      - similar allowing of join by ISO codes or names, with attempted
         synonym matching
-    -   similar reporting of country joining success and failure
+      - similar reporting of country joining success and failure
 
--   facilitate subsetting by country groupings
-
-    -   e.g. least developed countries etc.
+  - facilitate subsetting by country groupings
+    
+      - e.g. least developed countries etc.

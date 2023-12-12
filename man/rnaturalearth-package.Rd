@@ -6,6 +6,8 @@
 \alias{rnaturalearth-package}
 \title{rnaturalearth: World Map Data from Natural Earth}
 \description{
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
+
 Facilitates mapping by making natural earth map data from \url{https://www.naturalearthdata.com/} more easily available to R users.
 }
 \seealso{
@@ -13,6 +15,7 @@ Useful links:
 \itemize{
   \item \url{https://docs.ropensci.org/rnaturalearth/}
   \item \url{https://github.com/ropensci/rnaturalearth}
+  \item \url{https://docs.ropensci.org/rnaturalearthhires/}
   \item Report bugs at \url{https://github.com/ropensci/rnaturalearth/issues}
 }
 
