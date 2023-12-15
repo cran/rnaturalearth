@@ -1,7 +1,7 @@
-56f9cb3c37985b4318770d011b87f2cf *DESCRIPTION
+126cf0bc243dbc58112b9498386d59ca *DESCRIPTION
 8b5f0971f0b628904e4103119628a47d *LICENSE
 599e26dd85b8f9e234b8db853f42dbd4 *NAMESPACE
-b58464314f784afa4a779d4990f79a41 *NEWS.md
+33f04840ecdeadd8eb79c2b866967af8 *NEWS.md
 802a851e705dc789d19c02b14a2c1d9c *R/check_data_exist.R
 dc0d7a8a844fa874a0af44cb8eb9ef08 *R/check_scale.R
 47bd49e038259572cf2d85e49d1678c9 *R/datasets.R
@@ -62,10 +62,10 @@ f989ce0170f02a8655ba005466b625df *man/ne_file_name.Rd
 f5012863e57eb6cfef9aa29c13bd27eb *man/ne_states.Rd
 8399a13e208ad1570ef3d42147195aeb *man/rnaturalearth-package.Rd
 063a58f6bf7e679356c4c42cbd797fb3 *tests/testthat.R
-d7583ca216eef8e29ffb46d1e9611c03 *tests/testthat/test_ne_countries.R
-1229018c743fef056c2b029bfad1c1bd *tests/testthat/test_ne_file_name.R
-cae9d278b327450eab5a285248e6f79c *tests/testthat/test_ne_states.R
-ea8512d8aa74096ffce916c8446c4892 *tests/testthat/test_returnclass.R
+cd0885db6f71415dafe7120d3919e77f *tests/testthat/test_ne_countries.R
+4905eac1e79441e184191aa59b454b71 *tests/testthat/test_ne_file_name.R
+19187d8114a7fba4079da4a2b0f2bc1e *tests/testthat/test_ne_states.R
+1ae9298560e17a61e382dde2acd4cfaf *tests/testthat/test_returnclass.R
 4c5ca11bdb72d68a8f1a8391da21e137 *vignettes/create_cran_vignettes.R
 c7dd35bad3cdf2b7f8287b7665ee58cf *vignettes/finding-data.Rmd
 cd2fd19a6482ad124a3cb4257296dbb3 *vignettes/finding-data.Rmd-10-1.png
