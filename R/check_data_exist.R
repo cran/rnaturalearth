@@ -16,24 +16,25 @@
 #' 'raster'
 
 #' @examples
-#' check_data_exist(scale = 110, category = "cultural", type = "countries")
+#' check_data_exist(type = "countries", scale = 110, category = "cultural")
 #'
 #' # Type not in list for this category
-#' check_data_exist(scale = 110, category = "physical", type = "airports")
+#' check_data_exist(type = "airports", scale = 110, category = "physical")
 #'
 #' # Type in list but scale shows FALSE
-#' check_data_exist(scale = 110, category = "cultural", type = "airports")
+#' check_data_exist(type = "airports", scale = 110, category = "cultural")
 #'
 #' @return TRUE or FALSE
 #'
 #' @export
-check_data_exist <- function(scale = 110,
-                             type,
-                             category = c("cultural", "physical", "raster")) {
+check_data_exist <- function(
+  type,
+  scale = 110L,
+  category = c("cultural", "physical", "raster")
+) {
   # check permitted category
   category <- match.arg(category)
 
-  # todo doesn't yet check raster
   # I would need to create a data_list_raster.csv file
   if (category == "raster") {
     return(TRUE)
@@ -42,8 +43,7 @@ check_data_exist <- function(scale = 110,
   # check on permitted scales, convert names to numeric
   scale <- check_scale(scale)
 
-
-  df_data <- read.csv(
+  df_data <- utils::read.csv(
     system.file(
       "extdata",
       paste0("data_list_", category, ".csv"),
@@ -51,24 +51,20 @@ check_data_exist <- function(scale = 110,
     )
   )
 
-
   # first check if type is within the list
-  if (!type %in% df_data$type) {
-    warning(
-      type,
-      " seems not to be in the list for category=",
-      category,
-      " maybe try the other category of c('cultural', 'physical')"
+  if (!type %in% df_data[["type"]]) {
+    cli::cli_warn(
+      "{.arg {type}} seems not to be in the list for category= {.val {category}} maybe try the other category of c('cultural', 'physical')"
     )
+
     return(FALSE)
   }
 
-  exist <- df_data[df_data$type == type, paste0("scale", scale)]
+  exist <- df_data[df_data[["type"]] == type, paste0("scale", scale)]
 
   if (!exist) {
-    warning(
-      " seem not to exist in the list of Natural Earth data.",
-      " Check ?ne_download or http://www.naturalearthdata.com/features/ to see data availability."
+    cli::cli_warn(
+      "The requested daa seem not to exist in the list of Natural Earth data. Check {.code ?ne_download} or {.url http://www.naturalearthdata.com/features/} to see data availability."
     )
   }
 

@@ -14,27 +14,56 @@
 #' @param category one of natural earth categories : 'cultural', 'physical',
 #' 'raster'
 #'
-#' @param destdir folder to load files from, default=tempdir()
+#' @param destdir folder to load files from, default = tempdir()
 #'
 #' @param file_name OPTIONAL name of file (excluding path) instead of natural
 #' earth attributes
+#'
+#' @details This function should be used after first downloading the data with
+#' \code{ne_download(load = FALSE)}. The downloaded file can then be loaded
+#' using this function.
 #'
 #' @seealso \code{\link{ne_download}}
 #'
 #' @examples \dontrun{
 #' # download followed by load from tempdir() works in same R session
-#' spdf_world <- ne_download(scale = 110, type = "countries")
-#' spdf_world2 <- ne_load(scale = 110, type = "countries")
+#' spdf_world <- ne_download(
+#'   scale = 110,
+#'   type = "countries"
+#' )
+#' spdf_world2 <- ne_load(
+#'   scale = 110,
+#'   type = "countries"
+#' )
 #'
 #' # download followed by load from specified directory works between R sessions
-#' spdf_world <- ne_download(scale = 110, type = "countries", destdir = getwd())
-#' spdf_world2 <- ne_load(scale = 110, type = "countries", destdir = getwd())
+#' spdf_world <- ne_download(
+#'   scale = 110,
+#'   type = "countries",
+#'   destdir = getwd()
+#' )
+#' spdf_world2 <- ne_load(
+#'   scale = 110,
+#'   type = "countries",
+#'   destdir = getwd()
+#' )
 #'
 #' # for raster download & load
-#' rst <- ne_download(scale = 50, type = "OB_50M", category = "raster", destdir = getwd())
+#' rst <- ne_download(
+#'   scale = 50,
+#'   type = "OB_50M",
+#'   category = "raster",
+#'   destdir = getwd(),
+#'   load = FALSE
+#' )
 #'
 #' # load after having downloaded
-#' rst <- ne_load(scale = 50, type = "OB_50M", category = "raster", destdir = getwd())
+#' rst <- ne_load(
+#'   scale = 50,
+#'   type = "OB_50M",
+#'   category = "raster",
+#'   destdir = getwd()
+#' )
 #'
 #' # plot
 #' library(terra)
@@ -44,15 +73,17 @@
 #'
 #' @export
 ne_load <- function(
-    scale = 110,
+    scale = 110L,
     type = "countries",
     category = c("cultural", "physical", "raster"),
     destdir = tempdir(),
     file_name = NULL,
-    returnclass = c("sf", "sv")) {
+    returnclass = c("sf", "sv")
+    ) {
   category <- match.arg(category)
 
   returnclass <- match.arg(returnclass)
+  scale <- check_scale(scale)
 
   if (returnclass == "sp") {
     deprecate_sp("ne_download(returnclass = 'sp')")
@@ -62,33 +93,25 @@ ne_load <- function(
     file_name <- ne_file_name(scale = scale, type = type, category = category)
   }
 
-  error_msg <- paste0(
-    "the file ",
-    file_name, " seems not to exist in your local folder ",
-    destdir,
-    "\nDid you download it using ne_download()?"
-  )
+  spatial_file_path <- make_dest_path(file_name, category, destdir)
+
+  error_msg <- "The file {.path {spatial_file_path}} seems not to exist in your local folder {.path {destdir}}. Did you download it using {.fn rnaturalearth::ne_download}?"
+
+  if (!file.exists(spatial_file_path)) {
+    cli::cli_abort(error_msg)
+  }
 
   if (category == "raster") {
-    file_tif <- file.path(destdir, file_name, paste0(file_name, ".tif"))
-
-    if (!file.exists(file_tif)) {
-      stop(error_msg)
-    }
-
-    rst <- terra::rast(file_tif)
+    rst <- terra::rast(spatial_file_path)
 
     return(rst)
-  } else { # for shapefiles
-
-    # add '.shp' for the exists test (it's not needed by readOGR)
-    if (!file.exists(file.path(destdir, paste0(file_name, ".shp")))) {
-      stop(error_msg)
-    }
+  } else {
+    layer <- layer_name(type, scale)
 
     # read in data as either sf of spatvector
-    spatial_object <- read_spatial(
-      paste0(destdir, "/", file_name, ".shp"),
+    spatial_object <- read_spatial_vector(
+      spatial_file_path,
+      layer = layer,
       returnclass
     )
 

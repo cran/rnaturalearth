@@ -1,4 +1,69 @@
+# rnaturalearth (development version)
+
+## New features
+
+- Data is now downloaded using the GDAL Virtual File System, allowing `ne_download()` to read data directly from the zip file without requiring extraction.
+
+- We are transitioning to the [GeoPackage](https://www.geopackage.org/) format when `load = FALSE` is used in `ne_download()`. This modern format is more efficient and flexible than the previously use shapefile format.
+
+- Similarly, raster data (GeoTIFF) is now read directly from the zip file and written to the specified directory. For example, the following code downloads the 50m raster dataset and saves it to the working directory:
+
+  ```r
+  ne_download(
+    scale = 50,
+    type = "MSR_50M",
+    category = "raster",
+    load = FALSE,
+    destdir = getwd()
+  )
+  ```
+
+## Bug fixes and general improvements
+
+- Updated the base URL for downloading data to `https://naciscdn.org/naturalearth`, replacing the previous `https://naturalearth.s3.amazonaws.com/` url. This change aligns with the [Natural Earth](https://www.naturalearthdata.com/) website's source.
+
+- Improved package loading time by removing unnecessary imports and implementing lazy loading of dependencies (#119). Thanks to @heavywatal.
+
+- Using the `cli` package for better messages.
+
+- Correctly downloading parks and protected areas (#114)
+
+```r
+ne_download(
+  scale = 10,
+  type = "parks_and_protected_lands_line",
+  category = "cultural"
+)
+
+ne_download(
+  scale = 10,
+  type = "parks_and_protected_lands_point",
+  category = "cultural"
+)
+
+ne_download(
+  scale = 10,
+  type = "parks_and_protected_lands_scale_rank",
+  category = "cultural"
+)
+```
+
+- `rnaturalearth` now requires rnaturalearthdata (>= 1.0.0) and rnaturalearthhires (>= 1.0.0).
+
+- Correctly returning the file name in `ne_download()` when setting `load = FALSE`
+
+```r
+ne_download(
+  type = "MSR_50M",
+  category = "raster",
+  scale = 50,
+  load = FALSE
+)
+```
+
 # rnaturalearth 1.0.1
+
+- Do not test functions who rely on `rnaturalearthhires` because it is not available on CRAN.
 
 # rnaturalearth 1.0.0
 
@@ -47,8 +112,8 @@ More information about the retirement of `rgdal`, `rgeos` and `maptools`: https:
 # rnaturalearth 0.3.2
 
 - Added new maintainer and contributors ([#62](https://github.com/ropensci/rnaturalearth/issues/62)).
-- Using terra over raster ([#63](https://github.com/ropensci/rnaturalearth/pull/63))
 
+- Using terra over raster ([#63](https://github.com/ropensci/rnaturalearth/pull/63))
   - See <https://r-spatial.org/r/2022/04/12/evolution.html#packages-depending-on-sp-and-raster> and <https://r-spatial.org/r/2022/12/14/evolution2.html#deprecations-in-retiring-packages>
 
 - Fixes broken data download links.

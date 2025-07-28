@@ -6,7 +6,7 @@
 \title{Get natural earth world country polygons}
 \usage{
 ne_countries(
-  scale = 110,
+  scale = 110L,
   type = "countries",
   continent = NULL,
   country = NULL,
@@ -45,6 +45,10 @@ tiny_countries
 \details{
 Note that the filename of the requested object will be returned if
 `load = FALSE`.
+
+If the data is to be loaded into memory (`load = TRUE`), the download will
+be handled using the GDAL virtual file system, allowing direct access to the
+data without writing it to disk.
 }
 \examples{
 world <- ne_countries()

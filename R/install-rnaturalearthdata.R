@@ -7,11 +7,14 @@
 check_rnaturalearthdata <- function() {
   rnaturalearthdata_version <- "0.0.0.9000"
   if (!requireNamespace("rnaturalearthdata", quietly = TRUE)) {
-    message("The rnaturalearthdata package needs to be installed.")
+    cli::cli_inform(
+      "The {.pkg rnaturalearthdata} package needs to be installed."
+    )
     install_rnaturalearthdata()
   } else if (
-    utils::packageVersion("rnaturalearthdata") < rnaturalearthdata_version) {
-    message("The rnaturalearthdata package needs to be updated.")
+    utils::packageVersion("rnaturalearthdata") < rnaturalearthdata_version
+  ) {
+    cli::cli_inform("The {.pkg rnaturalearthdata} package needs to be updated.")
     install_rnaturalearthdata()
   }
 }
@@ -19,41 +22,36 @@ check_rnaturalearthdata <- function() {
 #' Install the naturalearthdata package after checking with the user
 #' @export
 install_rnaturalearthdata <- function() {
-  instructions <- paste(
-    "Please try installing the package for yourself",
-    "using the following command: \n",
-    # "devtools::install_github('ropensci/rnaturalearthdata')")
-    "install.packages(\"rnaturalearthdata\")"
-  )
-
   error_func <- function(e) {
-    stop(
-      paste("Failed to install the rnaturalearthdata package.\n", instructions)
+    cli::cli_abort(
+      "Failed to install the {.pkg rnaturalearthdata} package.\nPlease try installing the package for yourself using the following command: {.code install.packages(\"rnaturalearthdata\")}"
     )
   }
 
   # 23/2/17 changed to try install if not interactive to avoid winbuilder
   # warning
-  input <- 1
+  input <- 1L
   if (interactive()) {
-    input <- utils::menu(c("Yes", "No"),
+    input <- utils::menu(
+      c("Yes", "No"),
       title = "Install the rnaturalearthdata package?"
     )
   }
 
-  if (input == 1) {
-    message("Installing the rnaturalearthdata package.")
+  if (input == 1L) {
+    cli::cli_inform("Installing the {.pkg rnaturalearthdata} package.")
     tryCatch(
-      utils::install.packages("rnaturalearthdata",
+      utils::install.packages(
+        "rnaturalearthdata",
         repos = c("http://packages.ropensci.org", "http://cran.rstudio.com"),
         type = "source"
       ),
-      error = error_func, warning = error_func
+      error = error_func,
+      warning = error_func
     )
   } else {
-    stop(paste(
-      "The rnaturalearthdata package is necessary for that method.\n",
-      instructions
-    ))
+    cli::cli_abort(
+      "The {.pkg rnaturalearthdata} package is necessary for that method."
+    )
   }
 }

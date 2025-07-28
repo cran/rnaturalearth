@@ -5,20 +5,20 @@
 \title{check whether the requested data exist on Natural Earth}
 \usage{
 check_data_exist(
-  scale = 110,
   type,
+  scale = 110L,
   category = c("cultural", "physical", "raster")
 )
 }
 \arguments{
-\item{scale}{The scale of map to return, one of `110`, `50`, `10` or `small`,
-`medium`, `large`.}
-
 \item{type}{type of natural earth file to download one of 'countries',
 'map_units', 'map_subunits', 'sovereignty', 'states' OR the portion of any
 natural earth vector url after the scale and before the . e.g. for
 'ne_50m_urban_areas.zip' this would be 'urban_areas' OR the raster
 filename e.g. for 'MSR_50M.zip' this would be 'MSR_50M'}
+
+\item{scale}{The scale of map to return, one of `110`, `50`, `10` or `small`,
+`medium`, `large`.}
 
 \item{category}{one of natural earth categories : 'cultural', 'physical',
 'raster'}
@@ -34,15 +34,19 @@ names because I found the naming convention too tricky.
 \details{
 Note that the filename of the requested object will be returned if
 `load = FALSE`.
+
+If the data is to be loaded into memory (`load = TRUE`), the download will
+be handled using the GDAL virtual file system, allowing direct access to the
+data without writing it to disk.
 }
 \examples{
-check_data_exist(scale = 110, category = "cultural", type = "countries")
+check_data_exist(type = "countries", scale = 110, category = "cultural")
 
 # Type not in list for this category
-check_data_exist(scale = 110, category = "physical", type = "airports")
+check_data_exist(type = "airports", scale = 110, category = "physical")
 
 # Type in list but scale shows FALSE
-check_data_exist(scale = 110, category = "cultural", type = "airports")
+check_data_exist(type = "airports", scale = 110, category = "cultural")
 
 }
 \seealso{

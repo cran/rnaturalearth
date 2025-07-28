@@ -13,69 +13,118 @@
 #' @param category one of natural earth categories : 'cultural', 'physical',
 #' 'raster'
 #'
-#' @param full_url whether to return just the filename (default) or the full URL
-#' needed for download
-#'
 #' @examples
-#' ne_name <- ne_file_name(scale = 110, type = "countries")
-#' ne_url <- ne_file_name(scale = 110, type = "countries", full_url = TRUE)
+#' ne_url <- ne_file_name(scale = 110, type = "countries")
 #'
 #' @return string
 #'
 #' @export
 ne_file_name <- function(
-    scale = 110,
+    scale = 110L,
     type = "countries",
-    category = c("cultural", "physical", "raster"),
-    full_url = FALSE) {
-  # check on permitted scales, convert names to numeric
+    category = c("cultural", "physical", "raster")
+    ) {
   scale <- check_scale(scale)
-
-  # check permitted category
   category <- match.arg(category)
 
+  type <- normalize_type(type)
 
-  # add admin_0 to known types
-  if (type %in% c(
-    "countries",
-    "map_units",
-    "map_subunits",
-    "sovereignty",
-    "tiny_countries",
-    "boundary_lines_land",
-    "pacific_groupings",
-    "breakaway_disputed_areas",
-    "boundary_lines_disputed_areas",
-    "boundary_lines_maritime_indicator"
-  )) {
+  base_url <- "/vsizip//vsicurl/https://naciscdn.org/naturalearth"
+
+  # Construct the file path based on the data category
+  gdal_url <- if (category == "raster") {
+    file.path(
+      base_url,
+      sprintf("%sm", scale),
+      category,
+      sprintf("MSR_%sM.zip", scale),
+      sprintf("MSR_%sM", scale),
+      sprintf("MSR_%sM.tif", scale)
+    )
+  } else {
+    file.path(
+      base_url,
+      sprintf("%sm", scale),
+      category,
+      sprintf("ne_%sm_%s.zip", scale, type)
+    )
+  }
+
+  return(gdal_url)
+}
+
+#' Normalize the type argument for Natural Earth datasets
+#'
+#' This function standardizes the `type` argument by mapping common names to
+#' their respective Natural Earth dataset names.
+#'
+#' @inheritParams ne_file_name
+#'
+#' @return A string representing the normalized dataset type.
+normalize_type <- function(type) {
+  if (
+    type %in%
+      c(
+        "countries",
+        "map_units",
+        "map_subunits",
+        "sovereignty",
+        "tiny_countries",
+        "boundary_lines_land",
+        "pacific_groupings",
+        "breakaway_disputed_areas",
+        "boundary_lines_disputed_areas",
+        "boundary_lines_maritime_indicator"
+      )
+  ) {
+    return(paste0("admin_0_", type))
+  }
+
+  if (
+    type %in%
+      c(
+        "parks_and_protected_lands_area",
+        "parks_and_protected_lands_line",
+        "parks_and_protected_lands_point",
+        "parks_and_protected_lands_scale_rank"
+      )
+  ) {
+    return("parks_and_protected_lands")
+  }
+
+  if (type == "states") {
+    return("admin_1_states_provinces_lakes")
+  }
+
+  type
+}
+
+#' Generate the layer name for a Natural Earth dataset
+#'
+#' @inheritParams ne_file_name
+#' @return A string representing the dataset layer name.
+layer_name <- function(type, scale) {
+  if (
+    type %in%
+      c(
+        "countries",
+        "map_units",
+        "map_subunits",
+        "sovereignty",
+        "tiny_countries",
+        "boundary_lines_land",
+        "pacific_groupings",
+        "breakaway_disputed_areas",
+        "boundary_lines_disputed_areas",
+        "boundary_lines_maritime_indicator"
+      )
+  ) {
     type <- paste0("admin_0_", type)
   }
 
-
-  # add admin_1 to known types
-  # this actually just expands 'states' to the name including lakes
   if (type == "states") {
     type <- "admin_1_states_provinces_lakes"
   }
 
-
-  if (category == "raster") {
-    # raster seems not to have so straightforward naming, so require that name
-    # is passed in type
-    file_name <- paste0(type)
-  } else {
-    file_name <- paste0("ne_", scale, "m_", type)
-  }
-
-
-  # https://naturalearth.s3.amazonaws.com/110m_cultural/ne_110m_admin_0_countries.zip
-  if (full_url) {
-    file_name <- paste0(
-      "https://naturalearth.s3.amazonaws.com/",
-      scale, "m_", category, "/",
-      file_name, ".zip"
-    )
-  }
-
-  return(file_name)
+  sprintf("ne_%sm_%s", scale, type)
 }

@@ -5,7 +5,7 @@
 \title{Return a dataframe of available vector layers on Natural Earth}
 \usage{
 ne_find_vector_data(
-  scale = 110,
+  scale = 110L,
   category = c("cultural", "physical"),
   getmeta = FALSE
 )
@@ -28,6 +28,10 @@ provides the file name required in the type argument of ne_download.
 \details{
 Note that the filename of the requested object will be returned if
 `load = FALSE`.
+
+If the data is to be loaded into memory (`load = TRUE`), the download will
+be handled using the GDAL virtual file system, allowing direct access to the
+data without writing it to disk.
 }
 \examples{
 \dontrun{

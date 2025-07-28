@@ -1,8 +1,6 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-
 <!-- used devtools::build_readme() to update the md -->
-
 <!-- badges: start -->
 
 [![CRAN
@@ -22,24 +20,24 @@ Earth](https://www.naturalearthdata.com/) map data.
 
 This package provides :
 
-  - access to a pre-downloaded subset of Natural Earth v4.1.0 (March
-    2018) vector data commonly used in world mapping
+- access to a pre-downloaded subset of Natural Earth v4.1.0 (March 2018)
+  vector data commonly used in world mapping
 
-  - easy subsetting by countries and regions
+- easy subsetting by countries and regions
 
-  - functions to download other Natural Earth vector and raster data
+- functions to download other Natural Earth vector and raster data
 
-  - a simple, reproducible and sustainable workflow from Natural Earth
-    data to rnaturalearth enabling updating as new versions become
-    available
+- a simple, reproducible and sustainable workflow from Natural Earth
+  data to rnaturalearth enabling updating as new versions become
+  available
 
-  - clarification of differences in world maps classified by countries,
-    sovereign states and map units
+- clarification of differences in world maps classified by countries,
+  sovereign states and map units
 
-  - consistency with Natural Earth naming conventions so that
-    rnaturalearth users can use Natural Earth documentation
+- consistency with Natural Earth naming conventions so that
+  rnaturalearth users can use Natural Earth documentation
 
-  - data in `sf` or `sv` formats
+- data in `sf` or `sv` formats
 
 The [Natural Earth](https://www.naturalearthdata.com/) website
 structures vector data by scale, category and type. These determine the
@@ -123,12 +121,10 @@ functions to help with download of these data.
 The data available are outlined in the two tables below and online
 [here](https://www.naturalearthdata.com/downloads/50m-physical-vectors/).
 
-``` 
 
-category   cultural 
+    category   cultural 
 
-category   physical 
-```
+    category   physical 
 
 Specify the `scale`, `category` and `type` of the vector you want as in
 the examples below.
@@ -162,8 +158,16 @@ vignette("what-is-a-country", package = "rnaturalearth")
 
 ## Reproducible download of Natural Earth data into the package
 
-[Script](https://github.com/ropensci/rnaturalearthdata/blob/master/data-raw/data_download_script.r)
+[Script](https://github.com/ropensci/rnaturalearthdata/blob/master/data-raw/data_download_script.R)
 used to get data into the accompanying data packages.
+
+## Errors in the data?
+
+If you believe there is an issue with data provided by [Natural
+Earth](https://www.naturalearthdata.com/), please do not report it here.
+We are not responsible for the accuracy or maintenance of Natural Earth
+data. For any concerns regarding this data, please contact [Natural
+Earth](https://www.naturalearthdata.com/).
 
 ## Acknowledgements
 
@@ -181,27 +185,27 @@ resource.
 
 ### Potential additional data
 
-  - Country synonyms lookup
-      - dataframe with ISO3 and country synonyms
-      - similar to
-        <https://github.com/AndySouth/rworldmap/blob/master/data/countrySynonyms.rda>
-  - Country larger regions lookup
-      - dataframe with ISO3 and membership of different regional
-        groupings, e.g. continent, least developed countries etc.
-      - similar to
-        <https://github.com/AndySouth/rworldmap/blob/master/data/countryRegions.rda>
+- Country synonyms lookup
+  - dataframe with ISO3 and country synonyms
+  - similar to
+    <https://github.com/AndySouth/rworldmap/blob/master/data/countrySynonyms.rda>
+- Country larger regions lookup
+  - dataframe with ISO3 and membership of different regional groupings,
+    e.g. continent, least developed countries etc.
+  - similar to
+    <https://github.com/AndySouth/rworldmap/blob/master/data/countryRegions.rda>
 
 ### Potential additional functions
 
-  - facilitate joining of user data to country boundaries
-    
-      - similar to
-        <https://github.com/AndySouth/rworldmap/blob/master/R/joinCountryData2Map.R>
-      - … but with a better name
-      - similar allowing of join by ISO codes or names, with attempted
-        synonym matching
-      - similar reporting of country joining success and failure
+- facilitate joining of user data to country boundaries
 
-  - facilitate subsetting by country groupings
-    
-      - e.g. least developed countries etc.
+  - similar to
+    <https://github.com/AndySouth/rworldmap/blob/master/R/joinCountryData2Map.R>
+  - … but with a better name
+  - similar allowing of join by ISO codes or names, with attempted
+    synonym matching
+  - similar reporting of country joining success and failure
+
+- facilitate subsetting by country groupings
+
+  - e.g. least developed countries etc.
